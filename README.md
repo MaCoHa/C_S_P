@@ -19,3 +19,6 @@ node   0   1
   0:  10  21 
   1:  21  10 
 ```
+
+Get picture of cpu:
+Run: `lstopo --output-format png output.png`
