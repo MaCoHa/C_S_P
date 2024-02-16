@@ -60,19 +60,20 @@ namespace InputGen
         return result;
     }
 
-    int main(int argc, char const *argv[])
+
+}
+
+int main(int argc, char const *argv[])
+{
+    int num = 40;
+
+    vector<tuple<uint64_t, uint64_t>> result = InputGen::gen_input(num);
+
+    for (int i = 0; i < num; i++)
     {
-        int num = 40;
-
-        vector<tuple<uint64_t, uint64_t>> result = gen_input(num);
-
-        for (int i = 0; i < num; i++)
-        {
-            tuple<uint64_t, uint64_t> t = result[i];
-            cout << "(" << get<0>(t) << ", " << get<1>(t) << ")" << endl;
-        }
-
-        return 0;
+        tuple<uint64_t, uint64_t> t = result[i];
+        cout << "(" << get<0>(t) << ", " << get<1>(t) << ")" << endl;
     }
 
+    return 0;
 }
