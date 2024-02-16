@@ -5,6 +5,7 @@
 #include <vector>
 #include <tuple>
 #include <thread>
+#include <atomic>
  
 
 using namespace std;
@@ -24,11 +25,10 @@ namespace Concurrent{
     */
 
     void task(vector<pair<uint64_t, uint64_t>> &tuples, vector<vector<pair<uint64_t, uint64_t>>> &buffers, vector<atomic_int> &partition_indexes, const int START, const int END){
-        /*for (int i = START; i <= END; i++)
+        /*for (int i = START; i < END; i++)
         {
             
         }*/
-        cout << "Tuple size: " << tuples.size() << " START: " << START << " END: " << END << endl;
         
     }
     
@@ -49,9 +49,12 @@ namespace Concurrent{
         int end = TUPLES_PER_THREAD;
         for (int i = 0; i < NUM_THREADS; ++i)
         {
+            cout << " START: " << start << " END: " << end << endl;
+
             threads[i] = thread(task, ref(tuples), ref(buffers), ref(partition_indexes), start, end); 
-            start = end+1;
+            start = end;
             end = start + TUPLES_PER_THREAD;
+
         };
         
         for (int i = 0; i < NUM_THREADS; i++)
