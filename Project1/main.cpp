@@ -1,7 +1,7 @@
 #include <iostream>
+
 int main(int argc, char *argv[]) 
 {
-    std::cout << "Please input the amount of threads to spawn" << std::endl;
-
-
+    Concurrent::run(InputGen:gen_input(400),6,5);
+    return 0;
 }

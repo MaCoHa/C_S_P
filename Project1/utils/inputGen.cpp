@@ -31,9 +31,9 @@ namespace InputGen
         return (((uint64_t)rand()) << 32) | rand();
     }
 
-    vector<tuple<uint64_t, uint64_t>> gen_input(int n)
+    vector<pair<uint64_t, uint64_t>> gen_input(int n)
     {
-        vector<tuple<uint64_t, uint64_t>> result;
+        vector<pair<uint64_t, uint64_t>> result;
         set<uint64_t> keys;
         // Generate tuples
         for (int i = 0; i < n; ++i)
@@ -55,7 +55,7 @@ namespace InputGen
 
             // add to results
 
-            result.push_back(make_tuple(key, payload));
+            result.push_back(make_pair(key, payload));
         }
 
         return result;
@@ -68,7 +68,7 @@ int main(int argc, char const *argv[])
 {
     int num = 4000000;
 
-    vector<tuple<uint64_t, uint64_t>> result = InputGen::gen_input(num);
+    vector<pair<uint64_t, uint64_t>> result = InputGen::gen_input(num);
 
    /*  for (int i = 0; i < num; i++)
     {
