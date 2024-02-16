@@ -1,0 +1,23 @@
+
+[1,2,3,4,5,6]
+
+
+
+(1,2) (3,4) (5,6)
+
+(1,(2,(3,(4,(5,6)))))
+
+
+partition keys are uniqe
+
+Partitioning Key: 0x3A7F9D2B1E6C8F45
+Payload:           0xAB1234567890DEFF
+
+[(PK,PL),(PK1,PL1),(PKn,PLn)]
+
+[PK,..,PKn]
+
+Output of all partition keys
+    hashmap: [PK,..,PKn] = hash
+
+    hash(PK1) = PL1
