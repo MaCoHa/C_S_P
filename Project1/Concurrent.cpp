@@ -23,7 +23,7 @@ namespace Concurrent{
     
     */
 
-    void task(vector<pair<uint64_t, uint32_t>> &tuples, vector<vector<pair<uint64_t, uint64_t>>> &buffers, vector<atomic_int> &partition_indexes, const int START, const int END){
+    void task(vector<pair<uint64_t, uint64_t>> &tuples, vector<vector<pair<uint64_t, uint64_t>>> &buffers, vector<atomic_int> &partition_indexes, const int START, const int END){
         /*for (int i = START; i <= END; i++)
         {
             
@@ -32,7 +32,7 @@ namespace Concurrent{
         
     }
     
-    void run(vector<pair<uint64_t, uint32_t>> tuples, const int NUM_THREADS, const int PARTITIONS){
+    void run(vector<pair<uint64_t, uint64_t>> tuples, const int NUM_THREADS, const int PARTITIONS){
 
         /* 
             We expect data to be uniformly distributede such that each buffer would store tuples.size / PARTITIONS
