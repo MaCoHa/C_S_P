@@ -34,12 +34,13 @@ namespace InputGen
     vector<tuple<uint64_t, uint64_t>> gen_input(int n)
     {
         vector<tuple<uint64_t, uint64_t>> result;
-        set<uint16_t> keys;
+        set<uint64_t> keys;
         // Generate tuples
         for (int i = 0; i < n; ++i)
         {
+
             // Gen key
-            uint16_t key = rand_64bit();
+            uint64_t key = rand_64bit();
 
             // check key dosent exsits
 
@@ -65,15 +66,15 @@ namespace InputGen
 
 int main(int argc, char const *argv[])
 {
-    int num = 40;
+    int num = 4000000;
 
     vector<tuple<uint64_t, uint64_t>> result = InputGen::gen_input(num);
 
-    for (int i = 0; i < num; i++)
+   /*  for (int i = 0; i < num; i++)
     {
         tuple<uint64_t, uint64_t> t = result[i];
         cout << "(" << get<0>(t) << ", " << get<1>(t) << ")" << endl;
-    }
+    } */
 
     return 0;
 }
