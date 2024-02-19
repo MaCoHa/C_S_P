@@ -1,4 +1,6 @@
 #include <iostream>
+#include "Concurrent.cpp"
+#include "utils/inputGen.cpp"
 #include "includes/Concurrent.hpp"
 #include "includes/utils/inputGen.hpp"
 

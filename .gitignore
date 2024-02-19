@@ -56,3 +56,4 @@ _deps
 build/
 .vscode
 .DS_Store
+Project1/CMakeCache.txt
