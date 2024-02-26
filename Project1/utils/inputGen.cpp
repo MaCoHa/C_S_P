@@ -44,11 +44,11 @@ namespace InputGen
 
             // check key dosent exsits
 
-            while (keys.find(key) != keys.end())
+            /*while (keys.find(key) != keys.end())
             {
                 key = rand_64bit();
-            }
-            keys.insert(key);
+            }*/
+            //keys.
 
             // gen payload
             uint64_t payload = rand_64bit();
