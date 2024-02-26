@@ -1,0 +1,26 @@
+
+
+#Testing variables
+hashbits :
+    partitions
+number of threads
+
+
+Test run
+threads [1,2,4,8,16,32]
+
+hashbits[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]
+
+
+for i in hashbits:
+    for j in threads:
+        echo run experiment
+
+
+
+
+#Testing measurements
+    measure time in seconds and devide by the number of tuples
+    such that we get number of tuples pr second
+
+
