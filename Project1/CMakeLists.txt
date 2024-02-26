@@ -5,6 +5,8 @@ set(SOURCES
     Concurrent.cpp
     CountThenMove.cpp
     utils/inputGen.cpp
+    includes/Concurrent.hpp
+    includes/Count_then_move.hpp
 )
 #SET (CMAKE_CXX_FLAGS "-std=c++20")
 add_executable(main ${SOURCES})
