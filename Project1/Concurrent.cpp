@@ -7,6 +7,7 @@
 #include <thread>
 #include <atomic>
  
+#include "includes/Concurrent.hpp"
 
 using namespace std;
 namespace Concurrent{

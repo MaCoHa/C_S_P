@@ -1,5 +1,4 @@
 #include <atomic>
-#include <vector>
 
 namespace Concurrent{
     void task(std::vector<std::pair<uint64_t, uint64_t>> &tuples, std::vector<std::vector<std::pair<uint64_t, uint64_t>>> &buffers, std::vector<std::atomic_int> &partition_indexes, const int START, const int END);
