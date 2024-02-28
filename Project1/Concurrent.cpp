@@ -81,8 +81,9 @@ namespace Concurrent
         auto timer_end = high_resolution_clock::now();
  
         auto time = duration_cast<milliseconds>(timer_end-timer_start).count();
+        return time;
         //(16777216/(480/1000))*(10^-6)
-        return static_cast<double>(tuples.size()) / (time / 1000.0) * 1e-6;
+        //return static_cast<double>(tuples.size()) / (time / 1000.0) * 1e-6;
     }
 
 }
