@@ -7,7 +7,7 @@
 #include <thread>
 #include <atomic>
 #include <chrono>
-
+#include <pthread.h>
 #include "includes/Concurrent.hpp"
 
 using namespace std;
@@ -46,7 +46,7 @@ namespace Concurrent
         }
     }
 
-    long long run(vector<pair<uint64_t, uint64_t>> tuples, const int NUM_THREADS, const int PARTITIONS)
+    long long run(vector<pair<uint64_t, uint64_t>> tuples, const int NUM_THREADS, const int PARTITIONS, const bool USE_AFFINITY)
     {
 
         /*
@@ -70,6 +70,15 @@ namespace Concurrent
             }
 
             threads[i] = thread(task, ref(tuples), ref(buffers), ref(partition_indexes), start, end);
+            if(USE_AFFINITY){
+                cpu_set_t cpuset;
+                CPU_ZERO(&cpuset);
+                CPU_SET(i, &cpuset);
+                int rc = pthread_setaffinity_np(threads[i].native_handle(), sizeof(cpu_set_t), &cpuset);
+                if (rc != 0) {
+                    cerr << "Error calling pthread_setaffinity_np: " << rc << endl;
+                }
+            }
             start = end;
             end = start + TUPLES_PER_THREAD;
         };

@@ -40,7 +40,7 @@ namespace CountThenMove
         }
     }
 
-    long long runCount(vector<pair<uint64_t, uint64_t>> tuples, const int NUM_THREADS, const int PARTITIONS)
+    long long runCount(vector<pair<uint64_t, uint64_t>> tuples, const int NUM_THREADS, const int PARTITIONS, const bool USE_AFFINITY)
     {
         vector<vector<int>> thread_key_count(NUM_THREADS, vector<int>(PARTITIONS));
         // Task 1 spin theards and count number of keys
