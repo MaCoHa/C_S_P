@@ -21,7 +21,11 @@
 #include <vector>
 #include <tuple>
 #include <set>
+#include <list>
+#include <algorithm>
+#include <random>
 
+auto rng = std::default_random_engine{};
 using namespace std;
 namespace InputGen
 {
@@ -33,33 +37,23 @@ namespace InputGen
 
     vector<pair<uint64_t, uint64_t>> gen_input(int n)
     {
-        vector<pair<uint64_t, uint64_t>> result;
-        set<uint64_t> keys;
+        vector<pair<uint64_t, uint64_t>> result(n);
+        vector<bool> keys(n, false);
         // Generate tuples
-        for (int i = 0; i < n; ++i)
+        for (uint64_t i = 0; i < n; ++i)
         {
-
             // Gen key
-            uint64_t key = rand_64bit();
-
             // check key dosent exsits
-
-            /*while (keys.find(key) != keys.end())
-            {
-                key = rand_64bit();
-            }*/
-            //keys.
-
             // gen payload
             uint64_t payload = rand_64bit();
 
             // add to results
 
-            result.push_back(make_pair(key, payload));
+            result[i] = make_pair(i, payload);
         }
 
+        shuffle(begin(result), end(result), rng);
         return result;
     }
-
 
 }

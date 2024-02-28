@@ -18,7 +18,6 @@ do
     echo "Running Concurrent with : $var Partitions"
     ./main $num_threads $var 1 >> $concurrentFile
     #<arg1> <arg2> <arg3> > test-gen.csv
-    break
 done
 
 # Loop through the array
