@@ -62,6 +62,7 @@ namespace Concurrent
         int start = 0;
         int end = TUPLES_PER_THREAD;
         auto timer_start = high_resolution_clock::now();
+        vector<int> affinity_cpu_allocations{0, 16, 2, 18, 4, 20, 6, 22, 8, 24, 10, 26, 12, 28, 14, 30 /* NEW CPU*/, 1, 17, 3, 19, 5, 21, 7, 23, 9, 25, 11, 27, 13, 29, 15, 31};
         for (int i = 0; i < NUM_THREADS; ++i)
         {
             if (i == NUM_THREADS - 1)
@@ -70,15 +71,20 @@ namespace Concurrent
             }
 
             threads[i] = thread(task, ref(tuples), ref(buffers), ref(partition_indexes), start, end);
-            if(USE_AFFINITY){
+#if defined(POSIX)
+            if (USE_AFFINITY)
+            {
+
                 cpu_set_t cpuset;
                 CPU_ZERO(&cpuset);
-                CPU_SET(i, &cpuset);
+                CPU_SET(affinity_cpu_allocations[i], &cpuset);
                 int rc = pthread_setaffinity_np(threads[i].native_handle(), sizeof(cpu_set_t), &cpuset);
-                if (rc != 0) {
+                if (rc != 0)
+                {
                     cerr << "Error calling pthread_setaffinity_np: " << rc << endl;
                 }
             }
+#endif
             start = end;
             end = start + TUPLES_PER_THREAD;
         };
@@ -88,11 +94,11 @@ namespace Concurrent
             threads[i].join();
         };
         auto timer_end = high_resolution_clock::now();
- 
-        auto time = duration_cast<milliseconds>(timer_end-timer_start).count();
+
+        auto time = duration_cast<milliseconds>(timer_end - timer_start).count();
         return time;
         //(16777216/(480/1000))*(10^-6)
-        //return static_cast<double>(tuples.size()) / (time / 1000.0) * 1e-6;
+        // return static_cast<double>(tuples.size()) / (time / 1000.0) * 1e-6;
     }
 
 }

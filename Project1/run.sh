@@ -16,14 +16,14 @@ echo ",$num_threads" > $countthenmoveFile;
 for var in "${my_array[@]}"
 do
     echo "Running Concurrent with : $var Partitions"
-    ./main $num_threads $var 1 >> $concurrentFile
-    #<arg1> <arg2> <arg3> > test-gen.csv
+    ./main $num_threads $var 1 0 >> $concurrentFile
+    #./main ./main <num_threads> <num_partitions> <algorithm (1: Concurrent, 2: CountThenMove)> <core_affinity (0: False, 1: True)> > test-gen.csv
 done
 
 # Loop through the array
 for var in "${my_array[@]}"
 do
     echo "Running Cound_then_move with : $var Partitions"
-    ./main $num_threads $var 2 >> $countthenmoveFile
+    ./main $num_threads $var 2 0 >> $countthenmoveFile
 
 done

@@ -26,18 +26,19 @@ int main(int argc, char *argv[])
 {
     // Args: ./main <num_threads> <num_partitions> <algorithm> <core_affinity>
     // Example ./main 1,2,3,4 4 1 1
-    if (argc != 4)
+    if (argc != 5)
     {
         cout << "Invalid number of arguments" << endl;
         return 1;
     }
     vector<uint16_t> threads_arr = parse_threads(argv[1]);
-    int partitions = pow(2, atoi(argv[2]));
+    int hashbits = atoi(argv[2]);
+    int partitions = pow(2, hashbits);
     int algorithm = atoi(argv[3]);
     bool use_affinity = atoi(argv[4]);
     uint64_t tuples_size = pow(2, 24);
     vector<pair<uint64_t, uint64_t>> tuples = InputGen::gen_input(tuples_size);
-    cout << partitions;
+    cout << hashbits;
     for (int i = 0; i < threads_arr.size(); i++)
     {
         auto nr_threads = threads_arr[i];
