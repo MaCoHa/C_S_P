@@ -2,7 +2,6 @@
 #include "includes/Concurrent.hpp"
 #include "includes/CountThenMove.hpp"
 #include "includes/utils/inputGen.hpp"
-#include <iostream>
 #include <math.h>
 
 using namespace std;
@@ -38,7 +37,7 @@ int main(int argc, char *argv[])
     bool use_affinity = atoi(argv[4]);
     uint64_t tuples_size = pow(2, 24);
     vector<pair<uint64_t, uint64_t>> tuples = InputGen::gen_input(tuples_size);
-    cout << hashbits;
+    //cout << hashbits;
     for (int i = 0; i < threads_arr.size(); i++)
     {
         auto nr_threads = threads_arr[i];
@@ -58,6 +57,6 @@ int main(int argc, char *argv[])
             return 1;
         }
     }
-    cout << endl;
+    //cout << endl;
     return 0;
 }

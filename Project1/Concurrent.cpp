@@ -71,10 +71,9 @@ namespace Concurrent
             }
 
             threads[i] = thread(task, ref(tuples), ref(buffers), ref(partition_indexes), start, end);
-#if defined(POSIX)
+            
             if (USE_AFFINITY)
             {
-
                 cpu_set_t cpuset;
                 CPU_ZERO(&cpuset);
                 CPU_SET(affinity_cpu_allocations[i], &cpuset);
@@ -84,7 +83,6 @@ namespace Concurrent
                     cerr << "Error calling pthread_setaffinity_np: " << rc << endl;
                 }
             }
-#endif
             start = end;
             end = start + TUPLES_PER_THREAD;
         };

@@ -1,0 +1,15 @@
+# started on Tue Mar  5 01:04:53 2024
+
+
+ Performance counter stats for './main 32 18 2 1':
+
+          63964752      cache-misses                                                          
+          17265795      dTLB-load-misses                                                      
+            225689      iTLB-load-misses                                                      
+
+       3.426178437 seconds time elapsed
+
+       7.135851000 seconds user
+       0.726145000 seconds sys
+
+
