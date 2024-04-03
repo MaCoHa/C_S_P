@@ -1,4 +1,7 @@
 
 
-
+We want to test the performance of diffrent programing languages such as c++, c# and python, by creating 2 to 3 different
+sorting algorithms such as mergesort, quicksort and maybe multithreadid mergesort if we have the time.
+We intend to run each language sorting algorithm with 2,4,8,16,32 and 64 milions elements to sort.
+To mesure performance we currently intend to measure time, cache misses and dTLB
 
