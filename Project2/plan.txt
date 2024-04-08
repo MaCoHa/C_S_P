@@ -1,7 +1,26 @@
 
-
+Hi Pinar. this is current plan for the exam project in Computer Systems Performance.
 We want to test the performance of diffrent programing languages such as c++, c# and python, by creating 2 to 3 different
-sorting algorithms such as mergesort, quicksort and maybe multithreadid mergesort if we have the time.
+sorting algorithms such as mergesort, quicksort and maybe multithreaded mergesort if we have the time.
 We intend to run each language sorting algorithm with 2,4,8,16,32 and 64 milions elements to sort.
-To mesure performance we currently intend to measure time, cache misses and dTLB
+To mesure performance we currently intend to measure time, cache misses and dTLB.
+if you have any feedback or adjustments you think we should make then just write or contact us on wedensday.
+best regards Mads Cornelius and Philip Flyvholm (group 42)
 
+
+Subject: Exam Project Plan: Performance Testing of Programming Languages
+
+Hi Pinar, Thomas
+
+This is the current plan for the exam project in Computer Systems Performance.
+
+We aim to test the performance of different programming languages such as C++, C#, and Python by implementing 2 to 3 sorting algorithms, including mergesort, quicksort, and potentially a multithreaded mergesort if time allows.
+
+Our intention is to execute each language's sorting algorithm with datasets ranging from 2,4,8,16,32 and 64 million elements for evaluation. We plan to assess performance metrics such as time, cache misses, and dTLB.
+
+If you have any feedback or suggestions for adjustments, please feel free to share them with us. Alternatively, you can contact us on Wednesday.
+
+Best regards,
+
+Mads Cornelius and Philip Flyvholm
+(Group 42)
