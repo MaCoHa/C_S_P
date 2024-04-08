@@ -26,7 +26,7 @@ namespace CountThenMove
         }
     }
 
-    void moveTask(vector<pair<uint64_t, uint64_t>> &tuples, vector<pair<uint64_t, uint64_t>> &buffer, vector<int> key_indexs, const int START, const int END, int PARTITIONS)
+    void moveTask(vector<pair<uint64_t, uint64_t>> &tuples, vector<pair<uint64_t, uint64_t>> &buffer, vector<int> &key_indexs, const int START, const int END, int PARTITIONS)
     {
         for (int i = START; i < END; i++)
         {
@@ -45,13 +45,14 @@ namespace CountThenMove
         vector<vector<int>> thread_key_count(NUM_THREADS, vector<int>(PARTITIONS));
         // Task 1 spin theards and count number of keys
         thread threads[NUM_THREADS];
+        vector<pair<uint64_t, uint64_t>> output_buffer(tuples.size());
 
         const int TUPLES_PER_THREAD = tuples.size() / NUM_THREADS;
         int start = 0;
         int end = TUPLES_PER_THREAD;
         auto timer_start = high_resolution_clock::now();
         vector<int> affinity_cpu_allocations{0, 16, 2, 18, 4, 20, 6, 22, 8, 24, 10, 26, 12, 28, 14, 30 /* NEW CPU*/, 1, 17, 3, 19, 5, 21, 7, 23, 9, 25, 11, 27, 13, 29, 15, 31};
-
+        
         for (int i = 0; i < NUM_THREADS; i++)
         {
             if (i == NUM_THREADS - 1)
@@ -76,6 +77,7 @@ namespace CountThenMove
             end = start + TUPLES_PER_THREAD;
         };
         vector<int> key_count(PARTITIONS);
+       // auto timer_end_first = high_resolution_clock::now();
         for (int i = 0; i < NUM_THREADS; i++)
         {
             threads[i].join();
@@ -84,15 +86,29 @@ namespace CountThenMove
                 key_count[j] += thread_key_count[i][j];
             }
         };
+        
 
         // Task 2 calc each threads count priviliges and assgin them
 
         vector<int> key_indexes(PARTITIONS);
-        for (int j = 1; j < PARTITIONS; j++)
-            key_indexes[j] = key_indexes[j - 1] + key_count[j - 1];
+        vector<vector<int>> thread_key_indexes(NUM_THREADS, vector<int>(PARTITIONS));
+        for (int j = 0; j < PARTITIONS; j++){
+            int index = key_count[j-1];
+            if(j > 0){
+                index += key_indexes[j - 1];
+            }
+            key_indexes[j] = index;
+            for(int i = 0; i < NUM_THREADS; i++){
+                int threadIndex = index;
+                if(i > 0){
+                    threadIndex += thread_key_count[i-1][j];
+                }
+                thread_key_count[i][j] = threadIndex;
+            }
+        }
         start = 0;
         end = TUPLES_PER_THREAD;
-        vector<pair<uint64_t, uint64_t>> output_buffer(tuples.size());
+        //auto timer_start_second = high_resolution_clock::now();
         for (int i = 0; i < NUM_THREADS; ++i)
         {
             // subtask 1 start thread
@@ -100,7 +116,7 @@ namespace CountThenMove
             {
                 end = tuples.size();
             }
-            threads[i] = thread(moveTask, ref(tuples), ref(output_buffer), key_indexes, start, end, PARTITIONS);
+            threads[i] = thread(moveTask, ref(tuples), ref(output_buffer), ref(thread_key_indexes[i]), start, end, PARTITIONS);
             if (USE_AFFINITY)
             {
                 cpu_set_t cpuset;
@@ -113,19 +129,21 @@ namespace CountThenMove
                 }
             }
             // subtask 2 increase key indexes
-            for (int j = 0; j < PARTITIONS; j++)
-                key_indexes[j] += thread_key_count[i][j];
+            //for (int j = 0; j < PARTITIONS; j++) 
+            //    key_indexes[j] += thread_key_count[i][j];
 
             start = end;
             end = start + TUPLES_PER_THREAD;
         };
+        auto timer_end = high_resolution_clock::now();
+        //auto first_part_time = duration_cast<milliseconds>(timer_end_first-timer_start).count();
+        //auto second_part_time = duration_cast<milliseconds>(timer_end-timer_start_second).count();
         for (int i = 0; i < NUM_THREADS; i++)
         {
             threads[i].join();
         };
 
-        auto timer_end = high_resolution_clock::now();
- 
+       // cout << "first: " << first_part_time << " second: " << second_part_time << endl;
         auto time = duration_cast<milliseconds>(timer_end-timer_start).count();
         return time;
         //(16777216/(480/1000))*(10^-6)

@@ -30,59 +30,59 @@ do
     done
     
     # Concurrent
-    for partitions in "${hash_bits[@]}"
-    do
-        concurrentFile="$concurrentFolder/timings.csv"
-        cachemissFile="$concurrentFolder/perf-cache-miss.csv"
-        dTLBFile="$concurrentFolder/perf-dTLB.csv"
-        iTLFFile="$concurrentFolder/perf-iTLB.csv"
-        echo -n $partitions >> $concurrentFile
-        echo -n $partitions >> $cachemissFile
-        echo -n $partitions >> $dTLBFile
-        echo -n $partitions >> $iTLFFile
-        for threads in "${num_threads[@]}"
-        do
-            echo -n "," >> $cachemissFile
-            echo -n "," >> $dTLBFile
-            echo -n "," >> $iTLFFile
-            echo "Running Concurrent with : $partitions Partitions and $threads threads"
-            perf stat -o output.txt -e cache-misses,dTLB-load-misses,iTLB-load-misses ./main $threads $partitions 1 0 >> $concurrentFile
-            grep -E 'cache-misses' output.txt | sed 's/[^0-9,]//g' | tr -d ',' | tr -d '\n'   >> $cachemissFile
-            grep -E 'dTLB-load-misses' output.txt | sed 's/[^0-9,]//g' | tr -d ',' | tr -d '\n' >> $dTLBFile
-            grep -E 'iTLB-load-misses' output.txt | sed 's/[^0-9,]//g' | sed 's/,//' | tr -d '\n' >> $iTLFFile
-        done
-        echo "" >> $concurrentFile
-        echo "" >> $cachemissFile
-        echo "" >> $dTLBFile
-        echo "" >> $iTLFFile
-    done
-    Concurrent with affinity
-    for partitions in "${hash_bits[@]}"
-    do
-        currentFile="$concurrentAffinityFolder/timings.csv"
-        cachemissFile="$concurrentAffinityFolder/perf-cache-miss.csv"
-        dTLBFile="$concurrentAffinityFolder/perf-dTLB.csv"
-        iTLFFile="$concurrentAffinityFolder/perf-iTLB.csv"
-        echo -n $partitions >> $currentFile
-        echo -n $partitions >> $cachemissFile
-        echo -n $partitions >> $dTLBFile
-        echo -n $partitions >> $iTLFFile
-        for threads in "${num_threads[@]}"
-        do
-            echo -n "," >> $cachemissFile
-            echo -n "," >> $dTLBFile
-            echo -n "," >> $iTLFFile
-            echo "Running Concurrent with affinty : $partitions Partitions and $threads threads"
-            perf stat -o output.txt -e cache-misses,dTLB-load-misses,iTLB-load-misses ./main $threads $partitions 1 1 >> $currentFile
-            grep -E 'cache-misses' output.txt | sed 's/[^0-9,]//g' | tr -d ',' | tr -d '\n'   >> $cachemissFile
-            grep -E 'dTLB-load-misses' output.txt | sed 's/[^0-9,]//g' | tr -d ',' | tr -d '\n' >> $dTLBFile
-            grep -E 'iTLB-load-misses' output.txt | sed 's/[^0-9,]//g' | sed 's/,//' | tr -d '\n' >> $iTLFFile
-        done
-        echo "" >> $currentFile
-        echo "" >> $cachemissFile
-        echo "" >> $dTLBFile
-        echo "" >> $iTLFFile
-    done
+    # for partitions in "${hash_bits[@]}"
+    # do
+    #     concurrentFile="$concurrentFolder/timings.csv"
+    #     cachemissFile="$concurrentFolder/perf-cache-miss.csv"
+    #     dTLBFile="$concurrentFolder/perf-dTLB.csv"
+    #     iTLFFile="$concurrentFolder/perf-iTLB.csv"
+    #     echo -n $partitions >> $concurrentFile
+    #     echo -n $partitions >> $cachemissFile
+    #     echo -n $partitions >> $dTLBFile
+    #     echo -n $partitions >> $iTLFFile
+    #     for threads in "${num_threads[@]}"
+    #     do
+    #         echo -n "," >> $cachemissFile
+    #         echo -n "," >> $dTLBFile
+    #         echo -n "," >> $iTLFFile
+    #         echo "Running Concurrent with : $partitions Partitions and $threads threads"
+    #         perf stat -o output.txt -e cache-misses,dTLB-load-misses,iTLB-load-misses ./main $threads $partitions 1 0 >> $concurrentFile
+    #         grep -E 'cache-misses' output.txt | sed 's/[^0-9,]//g' | tr -d ',' | tr -d '\n'   >> $cachemissFile
+    #         grep -E 'dTLB-load-misses' output.txt | sed 's/[^0-9,]//g' | tr -d ',' | tr -d '\n' >> $dTLBFile
+    #         grep -E 'iTLB-load-misses' output.txt | sed 's/[^0-9,]//g' | sed 's/,//' | tr -d '\n' >> $iTLFFile
+    #     done
+    #     echo "" >> $concurrentFile
+    #     echo "" >> $cachemissFile
+    #     echo "" >> $dTLBFile
+    #     echo "" >> $iTLFFile
+    # done
+    # Concurrent with affinity
+    # for partitions in "${hash_bits[@]}"
+    # do
+    #     currentFile="$concurrentAffinityFolder/timings.csv"
+    #     cachemissFile="$concurrentAffinityFolder/perf-cache-miss.csv"
+    #     dTLBFile="$concurrentAffinityFolder/perf-dTLB.csv"
+    #     iTLFFile="$concurrentAffinityFolder/perf-iTLB.csv"
+    #     echo -n $partitions >> $currentFile
+    #     echo -n $partitions >> $cachemissFile
+    #     echo -n $partitions >> $dTLBFile
+    #     echo -n $partitions >> $iTLFFile
+    #     for threads in "${num_threads[@]}"
+    #     do
+    #         echo -n "," >> $cachemissFile
+    #         echo -n "," >> $dTLBFile
+    #         echo -n "," >> $iTLFFile
+    #         echo "Running Concurrent with affinty : $partitions Partitions and $threads threads"
+    #         perf stat -o output.txt -e cache-misses,dTLB-load-misses,iTLB-load-misses ./main $threads $partitions 1 1 >> $currentFile
+    #         grep -E 'cache-misses' output.txt | sed 's/[^0-9,]//g' | tr -d ',' | tr -d '\n'   >> $cachemissFile
+    #         grep -E 'dTLB-load-misses' output.txt | sed 's/[^0-9,]//g' | tr -d ',' | tr -d '\n' >> $dTLBFile
+    #         grep -E 'iTLB-load-misses' output.txt | sed 's/[^0-9,]//g' | sed 's/,//' | tr -d '\n' >> $iTLFFile
+    #     done
+    #     echo "" >> $currentFile
+    #     echo "" >> $cachemissFile
+    #     echo "" >> $dTLBFile
+    #     echo "" >> $iTLFFile
+    # done
     #CountThenMove 
     for partitions in "${hash_bits[@]}"
     do
@@ -110,7 +110,7 @@ do
         echo "" >> $dTLBFile
         echo "" >> $iTLFFile
     done
-    #CountThenMove with affinity
+    CountThenMove with affinity
     for partitions in "${hash_bits[@]}"
     do
         currentFile="$countthenmoveAffinityFolder/timings.csv"

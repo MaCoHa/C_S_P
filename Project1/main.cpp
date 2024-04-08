@@ -43,11 +43,13 @@ int main(int argc, char *argv[])
         auto nr_threads = threads_arr[i];
         if (algorithm == 1)
         {
+            //auto result = 1;
             auto result = Concurrent::run(tuples, nr_threads, partitions, use_affinity);
             cout << "," << result;
         }
         else if (algorithm == 2)
         {
+            //auto result = 1;
             auto result = CountThenMove::runCount(tuples, nr_threads, partitions, use_affinity);
             cout << "," << result;
         }
