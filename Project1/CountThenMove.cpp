@@ -88,7 +88,7 @@ namespace CountThenMove
         };
         
 
-        // Task 2 calc each threads count priviliges and assgin them
+        // Task 2 calc each threads count priviliges and assign them
 
         vector<int> key_indexes(PARTITIONS);
         vector<vector<int>> thread_key_indexes(NUM_THREADS, vector<int>(PARTITIONS));
