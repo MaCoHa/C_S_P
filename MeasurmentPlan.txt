@@ -1,0 +1,6 @@
+
+
+time, 
+cache misses 
+dTLB
+memory usage
