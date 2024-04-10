@@ -24,7 +24,7 @@ mkdir $time
 mkdir "data"
 
 million_elements=("2" "4" "8" "16" "32" "64")
-languages=("python" "c_sharp" "c_plus_plus") # Same as folder name
+languages=("python" "golang" "c_sharp" "c_plus_plus") # Same as folder name
 algorithms=("mergesort") # Same as bash script name excluding "run-" prefix (Ex. run-mergesort.sh = mergesort)
 SECONDS=0
 
