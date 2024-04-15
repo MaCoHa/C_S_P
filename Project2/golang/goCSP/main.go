@@ -2,6 +2,7 @@ package main
 
 import (
 	"goCSP/mergesort"
+	"goCSP/quicksort"
 	"log"
 	"os"
 	"strconv"
@@ -49,6 +50,10 @@ func main() {
 	if !isBaseCase {
 		if algorithm == "mergesort" {
 			mergesort.MergeSort(iArr)
+			log.Print(iArr)
+		} else if algorithm == "quicksort" {
+			quicksort.QuickSort(iArr)
+			log.Print(iArr)
 		} else {
 			log.Fatalln("Unsupported algorithm in python: " + algorithm)
 		}
