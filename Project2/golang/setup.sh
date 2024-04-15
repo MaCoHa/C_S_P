@@ -1,0 +1,2 @@
+cd ./goCSP
+go build

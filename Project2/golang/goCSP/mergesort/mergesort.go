@@ -1,35 +1,4 @@
-package main
-
-import (
-	"fmt"
-	"log"
-	"os"
-	"strconv"
-	"strings"
-)
-
-func check(e error) {
-	if e != nil {
-		panic(e)
-	}
-}
-
-func Slice_Atoi(strArr []string) ([]int, error) {
-	// NOTE:  Read Arr as Slice as you like
-	var str string // O
-	var i int      // O
-	var err error  // O
-
-	iArr := make([]int, 0, len(strArr))
-	for _, str = range strArr {
-		i, err = strconv.Atoi(str)
-		if err != nil {
-			return nil, err // O
-		}
-		iArr = append(iArr, i)
-	}
-	return iArr, nil
-}
+package mergesort
 
 func merge(array []int, left int, mid int, right int) {
 	subArrayOne := mid - left + 1
@@ -90,25 +59,6 @@ func mergeSort(array []int, begin int, end int) {
 	merge(array, begin, mid, end)
 }
 
-func main() {
-
-	args := os.Args
-	fmt.Println(args[0], args[1])
-
-	data, err := os.ReadFile("../data/" + args[1])
-	if err != nil {
-		log.Panicf("failed reading data from file: %s", err)
-	}
-
-	strArr := strings.Split(string(data), " ")
-
-	iArr, err := Slice_Atoi(strArr)
-	if err != nil {
-		log.Print("Slice_Atoi failed: ", err)
-		return
-	}
-
-	if args[2] == "1" {
-		mergeSort(iArr, 0, len(iArr)-1)
-	}
+func MergeSort(array []int) {
+	mergeSort(array, 0, len(array)-1)
 }
