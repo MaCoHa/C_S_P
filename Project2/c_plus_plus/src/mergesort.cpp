@@ -1,4 +1,7 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <fstream> 
+
+
 using namespace std;
 
 
@@ -88,9 +91,6 @@ void validate(int A[], int size){
 
 int main(int argc, char *argv[])
 {
-
-
-
 	string path = ("../../data/");
 	path += argv[1];
 	
