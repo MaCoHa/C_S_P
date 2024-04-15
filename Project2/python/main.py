@@ -1,6 +1,15 @@
 import sys
 import mergesort
 import quicksort
+
+def validate(arr):
+	sorted = True
+	for i in range(1,len(arr)):
+		if arr[i] < arr[i-1]:
+			sorted = False
+			break
+	print(sorted)
+
 def main():
     if len(sys.argv) <= 3:
          raise Exception("Not enough parameters. Usage: python3 main.py algorithm fileName isBaseCase")
@@ -17,13 +26,20 @@ def main():
     inputData = [int(num) for num in inputData]
     if not isBaseCase:
         if algorithm == "mergesort":
+            validate(inputData)
             mergesort.mergeSort(inputData)
+            
         elif algorithm == "quicksort":
+            validate(inputData)
+            
             quicksort.quickSortBase(inputData)
+            
+            
         else:
             raise Exception("Unsupported algorithm in python: " + algorithm)
     print(inputData)
     
+    validate(inputData)
     
 
 if __name__ == "__main__":
