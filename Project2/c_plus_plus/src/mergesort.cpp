@@ -72,6 +72,19 @@ void printArray(int  A[], int size)
 		cout << A[i] << " ";
 	cout << endl;
 }
+void validate(int A[], int size){
+    bool sorted = true;
+    for (int i = 1; i < size; i++){
+        if (A[i] > A[i - 1]){
+           sorted = false;
+        }
+        if (!sorted){ 
+            break;
+        }
+    }
+    cout << "The list is sorted: " << sorted << endl;
+
+}
 
 int main(int argc, char *argv[])
 {
@@ -100,16 +113,12 @@ int main(int argc, char *argv[])
         array[i] = numbers[i];
     }
 
-
-
-
+    validate(array,numbers_size-1);
 
 	if (*argv[2] == '1'){
-
 		mergeSort(array, 0, numbers_size-1);
-
-		
 	}
+    validate(array,numbers_size-1);
 
 	return 0;
 }
