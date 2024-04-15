@@ -1,18 +1,3 @@
-
-# Open the file in read mode
-file = open("demofile.txt", "r")
-
-
-# Split the content into individual numbers
-numbers = file.read().split()
-
-# Convert the numbers from strings to integers
-numbers = [int(num) for num in numbers]
-
-print(len(numbers))
-
-
-
 def mergeSort(arr):
 	if len(arr) > 1:
 
@@ -46,11 +31,6 @@ def mergeSort(arr):
 			arr[k] = R[j]
 			j += 1
 			k += 1
-
-
-
-print(numbers)
-	
 
 
 
