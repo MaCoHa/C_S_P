@@ -9,6 +9,17 @@ import (
 	"strings"
 )
 
+func validate(A []int, size int) {
+	sorted := true
+	for i := 1; i < size; i++ {
+		if A[i] < A[i-1] {
+			sorted = false
+			break
+		}
+	}
+	log.Printf("The list is sorted: %t", sorted)
+}
+
 func Slice_Atoi(strArr []string) ([]int, error) {
 	var str string
 	var i int
@@ -50,12 +61,11 @@ func main() {
 	if !isBaseCase {
 		if algorithm == "mergesort" {
 			mergesort.MergeSort(iArr)
-			log.Print(iArr)
 		} else if algorithm == "quicksort" {
 			quicksort.QuickSort(iArr)
-			log.Print(iArr)
 		} else {
 			log.Fatalln("Unsupported algorithm in python: " + algorithm)
 		}
 	}
+	validate(iArr, len(iArr))
 }
