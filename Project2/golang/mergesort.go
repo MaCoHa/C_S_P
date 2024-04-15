@@ -31,54 +31,71 @@ func Slice_Atoi(strArr []string) ([]int, error) {
 	return iArr, nil
 }
 
-func mergesort(arr []int) []int {
+func merge(array []int, left int, mid int, right int) {
+	subArrayOne := mid - left + 1
+	subArrayTwo := right - mid
 
-	if len(arr) > 1 {
-		mid := len(arr) / 2
+	// Create temp arrays
+	leftArray := make([]int, subArrayOne)
+	rightArray := make([]int, subArrayTwo)
 
-		L := arr[:mid]
-
-		R := arr[mid:]
-
-		L = mergesort(L)
-
-		R = mergesort(R)
-
-		i, j, k := 0, 0, 0
-
-		for 1 < len(L) && j < len(R) {
-			if L[i] <= R[j] {
-				arr[k] = L[i]
-				i += 1
-			} else {
-				arr[k] = R[j]
-				j += 1
-			}
-			k += 1
-
-			for i < len(L) {
-				arr[k] = L[i]
-				i += 1
-				k += 1
-			}
-
-			for j < len(R) {
-				arr[k] = R[j]
-				j += 1
-				k += 1
-			}
-
-		}
-		return arr
-	} else {
-		return arr
+	// Copy data to temp arrays leftArray[] and rightArray[]
+	for i := 0; i < subArrayOne; i++ {
+		leftArray[i] = array[left+i]
+	}
+	for j := 0; j < subArrayTwo; j++ {
+		rightArray[j] = array[mid+1+j]
 	}
 
+	indexOfSubArrayOne := 0
+	indexOfSubArrayTwo := 0
+	indexOfMergedArray := left
+
+	// Merge the temp arrays back into array[left..right]
+	for indexOfSubArrayOne < subArrayOne && indexOfSubArrayTwo < subArrayTwo {
+		if leftArray[indexOfSubArrayOne] <= rightArray[indexOfSubArrayTwo] {
+			array[indexOfMergedArray] = leftArray[indexOfSubArrayOne]
+			indexOfSubArrayOne++
+		} else {
+			array[indexOfMergedArray] = rightArray[indexOfSubArrayTwo]
+			indexOfSubArrayTwo++
+		}
+		indexOfMergedArray++
+	}
+
+	// Copy the remaining elements of left[], if there are any
+	for indexOfSubArrayOne < subArrayOne {
+		array[indexOfMergedArray] = leftArray[indexOfSubArrayOne]
+		indexOfSubArrayOne++
+		indexOfMergedArray++
+	}
+
+	// Copy the remaining elements of right[], if there are any
+	for indexOfSubArrayTwo < subArrayTwo {
+		array[indexOfMergedArray] = rightArray[indexOfSubArrayTwo]
+		indexOfSubArrayTwo++
+		indexOfMergedArray++
+	}
+}
+
+// mergeSort is the main function that sorts array[]
+func mergeSort(array []int, begin int, end int) {
+	if begin >= end {
+		return
+	}
+
+	mid := begin + (end-begin)/2
+	mergeSort(array, begin, mid)
+	mergeSort(array, mid+1, end)
+	merge(array, begin, mid, end)
 }
 
 func main() {
 
-	data, err := os.ReadFile("../input_gen/demofile.txt")
+	args := os.Args
+	fmt.Println(args[0], args[1])
+
+	data, err := os.ReadFile("../data/" + args[1])
 	if err != nil {
 		log.Panicf("failed reading data from file: %s", err)
 	}
@@ -90,7 +107,11 @@ func main() {
 		log.Print("Slice_Atoi failed: ", err)
 		return
 	}
-	fmt.Println(iArr)
-	fmt.Println(mergesort(iArr))
 
+	i, err := strconv.Atoi(args[2])
+	if i == 1 && err == nil {
+		mergeSort(iArr, 0, len(iArr)-1)
+	} else {
+		fmt.Println(err)
+	}
 }
