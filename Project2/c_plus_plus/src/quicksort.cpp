@@ -65,7 +65,7 @@ void printArray(int  A[], int size)
 void validate(int A[], int size){
     bool sorted = true;
     for (int i = 1; i < size; i++){
-        if (A[i] > A[i - 1]){
+        if (A[i] < A[i - 1]){
            sorted = false;
         }
         if (!sorted){ 
