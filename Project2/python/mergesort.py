@@ -48,7 +48,7 @@ def mergeSort(arr):
 			k += 1
 
 
-l 
+
 print(numbers)
 	
 

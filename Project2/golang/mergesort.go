@@ -31,6 +31,51 @@ func Slice_Atoi(strArr []string) ([]int, error) {
 	return iArr, nil
 }
 
+func mergesort(arr []int) []int {
+
+	if len(arr) > 1 {
+		mid := len(arr) / 2
+
+		L := arr[:mid]
+
+		R := arr[mid:]
+
+		L = mergesort(L)
+
+		R = mergesort(R)
+
+		i, j, k := 0, 0, 0
+
+		for 1 < len(L) && j < len(R) {
+			if L[i] <= R[j] {
+				arr[k] = L[i]
+				i += 1
+			} else {
+				arr[k] = R[j]
+				j += 1
+			}
+			k += 1
+
+			for i < len(L) {
+				arr[k] = L[i]
+				i += 1
+				k += 1
+			}
+
+			for j < len(R) {
+				arr[k] = R[j]
+				j += 1
+				k += 1
+			}
+
+		}
+		return arr
+	} else {
+		return arr
+	}
+
+}
+
 func main() {
 
 	data, err := os.ReadFile("../input_gen/demofile.txt")
@@ -46,5 +91,6 @@ func main() {
 		return
 	}
 	fmt.Println(iArr)
+	fmt.Println(mergesort(iArr))
 
 }
