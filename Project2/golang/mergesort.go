@@ -108,10 +108,7 @@ func main() {
 		return
 	}
 
-	i, err := strconv.Atoi(args[2])
-	if i == 1 && err == nil {
+	if args[2] == "1" {
 		mergeSort(iArr, 0, len(iArr)-1)
-	} else {
-		fmt.Println(err)
 	}
 }
