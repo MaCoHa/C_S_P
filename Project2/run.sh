@@ -26,6 +26,7 @@ mkdir "data"
 million_elements=("2" "4" "8" "16" "32" "64")
 languages=("python" "golang" "c_plus_plus") # Same as folder name
 algorithms=("mergesort") # Same as bash script name excluding "run-" prefix (Ex. run-mergesort.sh = mergesort)
+dataTypes=("1" "2" "3" "4")
 SECONDS=0
 
 # Setup
@@ -39,8 +40,11 @@ do
     [ ! -d "./tmp-data" ] && mkdir ./tmp-data
     for element_amount in "${million_elements[@]}"
     do
-        echo "Making data for $element_amount"
-        go run ./input_gen/main.go $element_amount > ./tmp-data/$element_amount.txt
+        for dataType in "${dataTypes[@]}"
+        do
+            echo "Making data $dataType for $element_amount"
+            go run ./input_gen/main.go $element_amount $dataType > ./tmp-data/$element_amount-$dataType.txt
+        done
     done
 
     path="$time/test-$i"
@@ -58,7 +62,7 @@ do
             for element_amount in "${million_elements[@]}"
             do
                 echo "Creating base case for $language with $element_amount million elements"
-                perf stat -o output.txt -e cache-misses,dTLB-load-misses bash ./$language/run-$algorithm.sh $element_amount.txt 1
+                perf stat -o output.txt -e cache-misses,dTLB-load-misses bash ./$language/run-$algorithm.sh $element_amount-1.txt 1
                 grep -E 'cache-misses' output.txt | sed 's/[^0-9,]//g' | tr -d ',' | tr -d '\n'   >> $cachemissBaseFile
                 grep -E 'dTLB-load-misses' output.txt | sed 's/[^0-9,]//g' | tr -d ',' | tr -d '\n' >> $dTLBBaseFile
                 grep -A 1 "seconds time elapsed" output.txt | tr -d 'seconds time elapsed' >> $timingsBaseFile
@@ -78,19 +82,22 @@ do
     do
         mkdir $path/$language
         for algorithm in "${algorithms[@]}"
-        do        
+        do
             folder="$path/$language/$algorithm"
             mkdir $folder
-            timingsFile="$folder/timings.csv"
-            cachemissFile="$folder/perf-cache-miss.csv"
-            dTLBFile="$folder/perf-dTLB-misses.csv"
-            for element_amount in "${million_elements[@]}"
+            for dataType in "${dataTypes[@]}"
             do
-                echo "Running $language with $element_amount million elements"
-                perf stat -o output.txt -e cache-misses,dTLB-load-misses bash ./$language/run-$algorithm.sh $element_amount.txt 0
-                grep -E 'cache-misses' output.txt | sed 's/[^0-9,]//g' | tr -d ',' | tr -d '\n'   >> $cachemissFile
-                grep -E 'dTLB-load-misses' output.txt | sed 's/[^0-9,]//g' | tr -d ',' | tr -d '\n' >> $dTLBFile
-                grep -A 1 "seconds time elapsed" output.txt | tr -d 'seconds time elapsed' >> $timingsFile
+                timingsFile="$folder/timings-$dataType.csv"
+                cachemissFile="$folder/perf-cache-miss-$dataType.csv"
+                dTLBFile="$folder/perf-dTLB-misses-$dataType.csv"
+                for element_amount in "${million_elements[@]}"
+                do
+                    echo "Running $language with $element_amount million elements"
+                    perf stat -o output.txt -e cache-misses,dTLB-load-misses bash ./$language/run-$algorithm.sh $element_amount-$dataType.txt 0
+                    grep -E 'cache-misses' output.txt | sed 's/[^0-9,]//g' | tr -d ',' | tr -d '\n'   >> $cachemissFile
+                    grep -E 'dTLB-load-misses' output.txt | sed 's/[^0-9,]//g' | tr -d ',' | tr -d '\n' >> $dTLBFile
+                    grep -A 1 "seconds time elapsed" output.txt | tr -d 'seconds time elapsed' >> $timingsFile
+                done
             done
         done
     done
