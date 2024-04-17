@@ -9,11 +9,6 @@ import (
 	"time"
 )
 
-func Percent(x int, y int) int {
-	p := float64(x) / float64(y)
-	return int(p)
-}
-
 func FullListShuffle(amount int) []int {
 
 	length := amount * 1000000
@@ -29,23 +24,42 @@ func FullListShuffle(amount int) []int {
 
 }
 
+func FlippedList(amount int) []int {
+	length := amount * 1_000_000
+	numbers := make([]int, length)
+
+	for i := 0; i < length; i++ {
+		numbers[i] = length - i
+	}
+	return numbers
+}
+
+func SortedList(amount int) []int {
+	length := amount * 1000000
+	numbers := make([]int, length)
+	for i := 0; i < length; i++ {
+		numbers[i] = i + 1
+	}
+	return numbers
+}
+
 func PartialListShuffle(amount int) []int {
 
 	length := amount * 1_000_000
-	/* 	shuffled := Percent(length, 20) */
+	shuffled := length / 10
 	numbers := make([]int, length)
 
 	for i := 0; i < length; i++ {
 		numbers[i] = i + 1
 	}
 
-	/* for z := 0; z < shuffled; z++ {
-		i := rand.Int() % length
-		j := rand.Int() % length
+	for z := 0; z < shuffled; z++ {
+		i := rand.Intn(length)
+		j := rand.Intn(length)
 
 		numbers[i], numbers[j] = numbers[j], numbers[i]
 
-	} */
+	}
 
 	return numbers
 
@@ -94,7 +108,10 @@ func main() {
 	} else if choice == 2 {
 		numbers = PartialListShuffle(n)
 	} else if choice == 3 {
-		numbers = PartialListShuffle(n)
+		numbers = FlippedList(n)
+
+		} else if choice == 4{
+			numbers = SortedList(n)
 
 	} else {
 		numbers = nil
@@ -102,7 +119,6 @@ func main() {
 	}
 	b := bufio.NewWriter(os.Stdout)
 	for i, n := range numbers {
-		fmt.Println(i)
 
 		if i == 0 {
 			b.WriteString(fmt.Sprint(n))
@@ -110,4 +126,5 @@ func main() {
 			b.WriteString(" " + fmt.Sprint(n))
 		}
 	}
+	b.Flush()
 }
