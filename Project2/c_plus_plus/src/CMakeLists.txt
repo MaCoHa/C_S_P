@@ -2,11 +2,10 @@ cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
 project (handin)
 set(SOURCES
     main.cpp
-    Concurrent.cpp
-    CountThenMove.cpp
-    utils/inputGen.cpp
-    includes/Concurrent.hpp
-    includes/CountThenMove.hpp
+    mergesort.cpp
+    quicksort.cpp
+    includes/mergesort.hpp
+    includes/quicksort.hpp
 )
 add_executable(main ${SOURCES})
 
