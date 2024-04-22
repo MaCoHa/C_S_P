@@ -35,50 +35,47 @@ do
     bash ./$language/setup.sh
 done
 
-for i in 1 2 3 4 5 6 7 8
+[ ! -d "./tmp-data" ] && mkdir ./tmp-data
+for element_amount in "${million_elements[@]}"
 do
-    [ ! -d "./tmp-data" ] && mkdir ./tmp-data
-    for element_amount in "${million_elements[@]}"
+    for dataType in "${dataTypes[@]}"
     do
-        for dataType in "${dataTypes[@]}"
-        do
-            echo "Making data $dataType for $element_amount"
-            go run ./input_gen/main.go $element_amount $dataType > ./tmp-data/$element_amount-$dataType.txt
-        done
+        echo "Making data $dataType for $element_amount million"
+        go run ./input_gen/main.go $element_amount $dataType > ./tmp-data/$element_amount-$dataType.txt
     done
-    
-    path="$time/test-$i"
-    mkdir $path
-    for language in "${languages[@]}"
-    do
-        mkdir $path/$language
-        for algorithm in "${algorithms[@]}"
-        do
-            folder="$path/$language/$algorithm"
-            mkdir $folder
-            timingsBaseFile="$folder/timings-base.csv"
-            cachemissBaseFile="$folder/perf-cache-miss-base.csv"
-            dTLBBaseFile="$folder/perf-dTLB-misses-base.csv"
-            for element_amount in "${million_elements[@]}"
-            do
-                echo -n "," >> $timingsBaseFile
-                echo -n "," >> $cachemissBaseFile
-                echo -n "," >> $dTLBBaseFile
-                echo "Creating base case for $language with $element_amount million elements"
-                perf stat -o output.txt -e cache-misses,dTLB-load-misses bash ./$language/run-$algorithm.sh $element_amount-1.txt 1
-                grep -E 'cache-misses' output.txt | sed 's/[^0-9,]//g' | tr -d ',' | tr -d '\n'   >> $cachemissBaseFile
-                grep -E 'dTLB-load-misses' output.txt | sed 's/[^0-9,]//g' | tr -d ',' | tr -d '\n' >> $dTLBBaseFile
-                grep -A 1 "seconds time elapsed" output.txt | tr -d 'seconds time elapsed' >> $timingsBaseFile
-            done
-            echo "" >> $timingsBaseFile
-            echo "" >> $cachemissBaseFile
-            echo "" >> $dTLBBaseFile
-        done
-    done
-    
-    #Cleanup
-    rm output.txt
 done
+
+path="$time/base"
+mkdir $path
+for language in "${languages[@]}"
+do
+    mkdir $path/$language
+    for algorithm in "${algorithms[@]}"
+    do
+        folder="$path/$language/$algorithm"
+        mkdir $folder
+        timingsBaseFile="$folder/timings-base.csv"
+        cachemissBaseFile="$folder/perf-cache-miss-base.csv"
+        dTLBBaseFile="$folder/perf-dTLB-misses-base.csv"
+        for element_amount in "${million_elements[@]}"
+        do
+            echo -n "," >> $timingsBaseFile
+            echo -n "," >> $cachemissBaseFile
+            echo -n "," >> $dTLBBaseFile
+            echo "Creating base case for $language with $element_amount million elements"
+            perf stat -o output.txt -e cache-misses,dTLB-load-misses bash ./$language/run-$algorithm.sh $element_amount-1.txt 1
+            grep -E 'cache-misses' output.txt | sed 's/[^0-9,]//g' | tr -d ',' | tr -d '\n'   >> $cachemissBaseFile
+            grep -E 'dTLB-load-misses' output.txt | sed 's/[^0-9,]//g' | tr -d ',' | tr -d '\n' >> $dTLBBaseFile
+            grep -A 1 "seconds time elapsed" output.txt | tr -d 'seconds time elapsed' >> $timingsBaseFile
+        done
+        echo "" >> $timingsBaseFile
+        echo "" >> $cachemissBaseFile
+        echo "" >> $dTLBBaseFile
+    done
+done
+
+#Cleanup
+rm output.txt
 
 for i in 1 2 3 4 5 6 7 8
 do

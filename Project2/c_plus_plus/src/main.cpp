@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <vector>
 #include "includes/mergesort.hpp"
 #include "includes/quicksort.hpp"
 
