@@ -24,20 +24,17 @@ def main():
 
     # Convert the numbers from strings to integers
     inputData = [int(num) for num in inputData]
+    #validate(inputData)
     if not isBaseCase:
         if algorithm == "mergesort":
-            validate(inputData)
             mergesort.mergeSort(inputData)
-            
         elif algorithm == "quicksort":
-            validate(inputData)
-            
             quicksort.quickSortBase(inputData)
             
             
         else:
             raise Exception("Unsupported algorithm in python: " + algorithm)
-    print(inputData)
+    #print(inputData)
     
     validate(inputData)
     

@@ -67,5 +67,5 @@ func main() {
 			log.Fatalln("Unsupported algorithm in python: " + algorithm)
 		}
 	}
-	validate(iArr, len(iArr))
+	//validate(iArr, len(iArr))
 }

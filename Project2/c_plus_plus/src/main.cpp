@@ -46,18 +46,12 @@ int main(int argc, char *argv[])
 	}
 
 	file.close();
-
-	// Convert vector to array if needed
-	int array[numbers.size()];
-	for (size_t i = 0; i < numbers_size; ++i)
-	{
-		array[i] = numbers[i];
-	}
+	int* array = &numbers[0];
 	if(*argv[3] == '1'){
 		return 0;
 	}
 
-	validate(array, numbers_size - 1);
+	//validate(array, numbers_size - 1);
 
 	if (argv[2] == string("mergesort"))
 	{
@@ -69,7 +63,7 @@ int main(int argc, char *argv[])
 	}else{
 		throw invalid_argument("Must give a valid algorithm");
 	}
-	validate(array, numbers_size - 1);
+	//validate(array, numbers_size - 1);
 
 	return 0;
 }

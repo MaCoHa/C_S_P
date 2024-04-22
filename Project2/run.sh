@@ -35,13 +35,13 @@ do
     bash ./$language/setup.sh
 done
 
-[ ! -d "./tmp-data" ] && mkdir ./tmp-data
+[ ! -d "./data" ] && mkdir ./data
 for element_amount in "${million_elements[@]}"
 do
     for dataType in "${dataTypes[@]}"
     do
         echo "Making data $dataType for $element_amount million"
-        go run ./input_gen/main.go $element_amount $dataType > ./tmp-data/$element_amount-$dataType.txt
+        go run ./input_gen/main.go $element_amount $dataType > ./data/$element_amount-$dataType.txt
     done
 done
 
@@ -99,7 +99,7 @@ do
                     echo -n "," >> $timingsFile
                     echo -n "," >> $cachemissFile
                     echo -n "," >> $dTLBFile
-                    echo "Running $language with $element_amount million elements"
+                    echo "Running $algorithm with $language and $element_amount million elements for datatype: $datatype"
                     perf stat -o output.txt -e cache-misses,dTLB-load-misses bash ./$language/run-$algorithm.sh $element_amount-$dataType.txt 0
                     grep -E 'cache-misses' output.txt | sed 's/[^0-9,]//g' | tr -d ',' | tr -d '\n'   >> $cachemissFile
                     grep -E 'dTLB-load-misses' output.txt | sed 's/[^0-9,]//g' | tr -d ',' | tr -d '\n' >> $dTLBFile
@@ -112,7 +112,7 @@ do
         done
     done
     # Cleanup
-    rm ./tmp-data
+    rm ./data
     rm output.txt
     
 done
