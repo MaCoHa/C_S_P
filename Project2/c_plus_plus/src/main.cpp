@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
 	if(argc <= 3){
 		throw invalid_argument("Too Few arguments. Usage: ./main (file_name) (algorithm) (is_base_case)");
 	}
-	string path = ("../../data/");
+	string path = ("../../tmp-data/");
 	path += argv[1];
 
 	ifstream file(path);

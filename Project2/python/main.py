@@ -18,7 +18,7 @@ def main():
     fileName = sys.argv[2]
     isBaseCase = sys.argv[3].lower() in ["1" , "true"]
     
-    file = open("../data/" + fileName, "r")
+    file = open("../tmp-data/" + fileName, "r")
 
     # Split the content into individual numbers
     inputData = file.read().split()

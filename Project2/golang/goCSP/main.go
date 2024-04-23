@@ -46,7 +46,7 @@ func main() {
 	fileName := args[2]
 	isBaseCase := args[3] == "1" || strings.ToLower(args[3]) == "true"
 
-	data, err := os.ReadFile("../../data/" + fileName)
+	data, err := os.ReadFile("../../tmp-data/" + fileName)
 	if err != nil {
 		log.Fatalf("failed reading data from file: %s", err)
 	}

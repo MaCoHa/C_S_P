@@ -20,8 +20,8 @@
 cd "$(dirname "${BASH_SOURCE[0]}")"
 
 time=$(date +"%Y-%m-%d-%H:%M:%S")
-mkdir $time
-mkdir "data"
+[ ! -d "./data" ] && mkdir ./data
+mkdir data/$time
 
 million_elements=("2" "4" "8" "16" "32" "64")
 languages=("python" "golang" "c_plus_plus") # Same as folder name
@@ -35,17 +35,17 @@ do
     bash ./$language/setup.sh
 done
 
-[ ! -d "./data" ] && mkdir ./data
+[ ! -d "./tmp-data" ] && mkdir ./tmp-data
 for element_amount in "${million_elements[@]}"
 do
     for dataType in "${dataTypes[@]}"
     do
         echo "Making data $dataType for $element_amount million"
-        go run ./input_gen/main.go $element_amount $dataType > ./data/$element_amount-$dataType.txt
+        go run ./input_gen/main.go $element_amount $dataType > ./tmp-data/$element_amount-$dataType.txt
     done
 done
 
-path="$time/base"
+path="data/$time/base"
 mkdir $path
 for language in "${languages[@]}"
 do
@@ -122,7 +122,7 @@ do
         done
     done
     # Cleanup
-    rm ./data
+    rm ./tmp-data
     rm output.txt
 done
 
