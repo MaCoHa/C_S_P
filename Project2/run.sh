@@ -84,7 +84,7 @@ rm output.txt
 
 for i in 1 2 3 4 5 6 7 8
 do
-    path="$time/test-$i"
+    path="data/$time/test-$i"
     mkdir $path
     for language in "${languages[@]}"
     do
