@@ -1000,4 +1000,8 @@ coverage*[.json, .xml, .info]
 # Ionide (cross platform F# VS Code tools) working folder
 
 # End of https://www.toptal.com/developers/gitignore/api/c++,go,goland,vs,csharp,python,cmake,visualstudiocode,git,dotnetcore
+Project2/golang/goCSP/goCSP
+Project2/c_plus_plus/src/main
 
+# used for data testing
+test_test
