@@ -1,6 +1,7 @@
 import sys
 import mergesort
 import quicksort
+sys.setrecursionlimit(10**6)
 
 def validate(arr):
 	sorted = True
@@ -17,29 +18,26 @@ def main():
     fileName = sys.argv[2]
     isBaseCase = sys.argv[3].lower() in ["1" , "true"]
     
-    file = open("../data/" + fileName, "r")
+    file = open("../tmp-data/" + fileName, "r")
 
     # Split the content into individual numbers
     inputData = file.read().split()
 
     # Convert the numbers from strings to integers
     inputData = [int(num) for num in inputData]
+    #validate(inputData)
     if not isBaseCase:
         if algorithm == "mergesort":
-            validate(inputData)
-            mergesort.mergeSort(inputData)
-            
+            inputData = mergesort.mergeSort(inputData)
         elif algorithm == "quicksort":
-            validate(inputData)
-            
             quicksort.quickSortBase(inputData)
             
             
         else:
             raise Exception("Unsupported algorithm in python: " + algorithm)
-    print(inputData)
+    #print(inputData)
     
-    validate(inputData)
+    #validate(inputData)
     
 
 if __name__ == "__main__":
