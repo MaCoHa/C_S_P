@@ -1,0 +1,14 @@
+# started on Wed Apr 17 11:32:11 2024
+
+
+ Performance counter stats for 'bash ./run-mergesort.sh 64-4.txt 0':
+
+             26043      cache-misses                                                          
+              2336      dTLB-load-misses                                                      
+
+       0.007144788 seconds time elapsed
+
+       0.004447000 seconds user
+       0.003073000 seconds sys
+
+
