@@ -28,7 +28,7 @@ def main():
     #validate(inputData)
     if not isBaseCase:
         if algorithm == "mergesort":
-            inputData = mergesort.mergeSort(inputData)
+            mergesort.mergeSort(inputData)
         elif algorithm == "quicksort":
             quicksort.quickSortBase(inputData)
             
@@ -37,7 +37,7 @@ def main():
             raise Exception("Unsupported algorithm in python: " + algorithm)
     #print(inputData)
     
-    #validate(inputData)
+    validate(inputData)
     
 
 if __name__ == "__main__":
