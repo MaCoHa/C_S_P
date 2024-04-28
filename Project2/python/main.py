@@ -37,7 +37,7 @@ def main():
             raise Exception("Unsupported algorithm in python: " + algorithm)
     #print(inputData)
     
-    validate(inputData)
+    #validate(inputData)
     
 
 if __name__ == "__main__":
