@@ -1,4 +1,3 @@
-// C++ Implementation of the Quick Sort Algorithm.
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -6,66 +5,88 @@
 using namespace std;
 namespace QuickSort
 {
-	int partition(int arr[], int start, int end)
+
+	// A utility function to swap two elements
+	void swap(int *a, int *b)
 	{
-
-		int pivot = arr[start];
-
-		int count = 0;
-		for (int i = start + 1; i <= end; i++)
-		{
-			if (arr[i] <= pivot)
-				count++;
-		}
-
-		// Giving pivot element its correct position
-		int pivotIndex = start + count;
-		swap(arr[pivotIndex], arr[start]);
-
-		// Sorting left and right parts of the pivot element
-		int i = start, j = end;
-
-		while (i < pivotIndex && j > pivotIndex)
-		{
-
-			while (arr[i] <= pivot)
-			{
-				i++;
-			}
-
-			while (arr[j] > pivot)
-			{
-				j--;
-			}
-
-			if (i < pivotIndex && j > pivotIndex)
-			{
-				swap(arr[i++], arr[j--]);
-			}
-		}
-
-		return pivotIndex;
+		int t = *a;
+		*a = *b;
+		*b = t;
 	}
 
-	void quickSort(int arr[], int start, int end)
+	/* This function is same in both iterative and recursive*/
+	int partition(int arr[], int l, int h)
 	{
+		int x = arr[h];
+		int i = (l - 1);
 
-		// base case
-		if (start >= end)
-			return;
+		for (int j = l; j <= h - 1; j++)
+		{
+			if (arr[j] <= x)
+			{
+				i++;
+				swap(&arr[i], &arr[j]);
+			}
+		}
+		swap(&arr[i + 1], &arr[h]);
+		return (i + 1);
+	}
 
-		// partitioning the array
-		int p = partition(arr, start, end);
+	/* A[] --> Array to be sorted,
+	l --> Starting index,
+	h --> Ending index */
+	void quickSortIterative(int arr[], int l, int h)
+	{
+		// Create an auxiliary stack
+		int stack[h - l + 1];
 
-		// Sorting the left part
-		quickSort(arr, start, p - 1);
+		// initialize top of stack
+		int top = -1;
 
-		// Sorting the right part
-		quickSort(arr, p + 1, end);
+		// push initial values of l and h to stack
+		stack[++top] = l;
+		stack[++top] = h;
+
+		// Keep popping from stack while is not empty
+		while (top >= 0)
+		{
+			// Pop h and l
+			h = stack[top--];
+			l = stack[top--];
+
+			// Set pivot element at its correct position
+			// in sorted array
+			int p = partition(arr, l, h);
+
+			// If there are elements on left side of pivot,
+			// then push left side to stack
+			if (p - 1 > l)
+			{
+				stack[++top] = l;
+				stack[++top] = p - 1;
+			}
+
+			// If there are elements on right side of pivot,
+			// then push right side to stack
+			if (p + 1 < h)
+			{
+				stack[++top] = p + 1;
+				stack[++top] = h;
+			}
+		}
+	}
+
+	// A utility function to print contents of arr
+	void printArr(int arr[], int n)
+	{
+		int i;
+		for (i = 0; i < n; ++i)
+			cout << arr[i] << " ";
 	}
 
 	void QuickSort(int array[], int size)
 	{
-		quickSort(array, 0, size - 1);
+		quickSortIterative(array, 0, size - 1);
 	}
+
 }

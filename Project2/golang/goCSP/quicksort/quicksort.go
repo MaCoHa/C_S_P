@@ -1,26 +1,75 @@
 package quicksort
 
-func partition(array []int, low int, high int) int {
-	pivot := array[high]
-	i := low - 1
-	for j := low; j < high; j++ {
-		if array[j] <= pivot {
-			i += 1
-			array[i], array[j] = array[j], array[i]
+// A utility function to swap two elements
+func swap(a *int, b *int) {
+	t := *a
+	*a = *b
+	*b = t
+}
+
+// This function is same in both iterative and recursive
+func partition(arr []int, l int, h int) int {
+	x := arr[h]
+	i := l - 1
+
+	for j := l; j <= h-1; j++ {
+		if arr[j] <= x {
+			i++
+			swap(&arr[i], &arr[j])
 		}
 	}
-	array[i+1], array[high] = array[high], array[i+1]
+	swap(&arr[i+1], &arr[h])
 	return i + 1
 }
 
-func quicksort(array []int, low int, high int) {
-	if low < high {
-		pi := partition(array, low, high)
-		quicksort(array, low, pi-1)
-		quicksort(array, pi+1, high)
+// A[] --> Array to be sorted,
+// l --> Starting index,
+// h --> Ending index
+func quickSortIterative(arr []int, l int, h int) {
+	// Create an auxiliary stack
+	stack := make([]int, h-l+1)
+
+	// initialize top of stack
+	top := -1
+
+	// push initial values of l and h to stack
+	top++
+	stack[top] = l
+	top++
+	stack[top] = h
+
+	// Keep popping from stack while is not empty
+	for top >= 0 {
+		// Pop h and l
+		h = stack[top]
+		top--
+		l = stack[top]
+		top--
+
+		// Set pivot element at its correct position
+		// in sorted array
+		p := partition(arr, l, h)
+
+		// If there are elements on left side of pivot,
+		// then push left side to stack
+		if p-1 > l {
+			top++
+			stack[top] = l
+			top++
+			stack[top] = p - 1
+		}
+
+		// If there are elements on right side of pivot,
+		// then push right side to stack
+		if p+1 < h {
+			top++
+			stack[top] = p + 1
+			top++
+			stack[top] = h
+		}
 	}
 }
 
-func QuickSort(array []int) {
-	quicksort(array, 0, len(array)-1)
+func QuickSort(array []int, size int) {
+	quickSortIterative(array, 0, size-1)
 }
