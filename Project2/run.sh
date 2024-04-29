@@ -24,7 +24,7 @@ time=$(date +"%Y-%m-%d-%H:%M:%S")
 mkdir data/$time
 
 million_elements=("2" "4" "8" "16" "32" "64")
-languages=("python" "golang" "c_plus_plus") # Same as folder name
+languages=("golang" "c_plus_plus" "python") # Same as folder name
 algorithms=("mergesort" "quicksort") # Same as bash script name excluding "run-" prefix (Ex. run-mergesort.sh = mergesort)
 dataTypes=("1" "2" "3" "4")
 SECONDS=0
