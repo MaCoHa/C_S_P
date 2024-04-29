@@ -1,51 +1,48 @@
-def mergeSort(arr):
-    n = len(arr)
-    current_size = 1
 
-    # Outer loop for traversing subarrays of current_size
-    while True:
-        left = 0
-        # Inner loop for merge call in a subarray
-        # Each complete iteration sorts a subarray of current_size
-        while left < n - 1:
-            #We save a few seconds in the long run with this:
-            mid = left + current_size - 1 if (left + current_size) - 1 < n-1 else n - 1
-            right = left + 2 * current_size-1 if (left + 2 * current_size-1) < n-1 else n - 1
-            # Merge subarrays arr[left...mid] and arr[mid+1...right]
-            merge(arr, left, mid, right)
-            left += 2 * current_size
-        current_size *= 2
-        #print("double")
-        if current_size >= n:
-            break
 
-def merge(arr, left, mid, right):
-    temp = arr[left:right + 1]  # Temporary array to store merged subarrays
-    i = left    # Initial index of left subarray
-    j = mid + 1  # Initial index of right subarray
-    k = 0       # Initial index of temporary array
+def mergeSort(a):
+	width = 1
+	n = len(a)										 
 
-    # Merge the subarrays
-    while i <= mid and j <= right:
-        if arr[i] < arr[j]:
-            temp[k] = arr[i]
-            i += 1
-        else:
-            temp[k] = arr[j]
-            j += 1
-        k += 1
+	while (width < n):
+		l=0;
+		while (l < n): 
+			r = min(l+(width*2-1), n-1)		 
+			m = min(l+width-1,n-1)
+			 
+			merge(a, l, m, r)
+			l += width*2
+		width *= 2
+	return a
 
-    # Copy the remaining elements of left subarray
-    while i <= mid:
-        temp[k] = arr[i]
-        i += 1
-        k += 1
+def merge(a, l, m, r): 
+	n1 = m - l + 1
+	n2 = r - m 
+	L = [0] * n1 
+	R = [0] * n2 
+	for i in range(0, n1): 
+		L[i] = a[l + i] 
+	for i in range(0, n2): 
+		R[i] = a[m + i + 1] 
 
-    # Copy the remaining elements of right subarray
-    while j <= right:
-        temp[k] = arr[j]
-        j += 1
-        k += 1
+	i, j, k = 0, 0, l 
+	while i < n1 and j < n2: 
+		if L[i] <= R[j]: 
+			a[k] = L[i] 
+			i += 1
+		else: 
+			a[k] = R[j] 
+			j += 1
+		k += 1
 
-    # Copy the merged elements back to the original array
-    arr[left:right + 1] = temp
+	while i < n1: 
+		a[k] = L[i] 
+		i += 1
+		k += 1
+
+	while j < n2: 
+		a[k] = R[j] 
+		j += 1
+		k += 1
+
+

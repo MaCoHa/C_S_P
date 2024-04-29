@@ -1,73 +1,80 @@
-#include <iostream>
-#include <fstream>
-#include <vector>
-
+#include <bits/stdc++.h>
 using namespace std;
-namespace MergeSort
+
+void merge(int arr[], int l, int m, int r);
+
+int min(int x, int y) { return (x<y)? x :y; }
+
+void MergeSort(int array[], int size)
 {
-	void merge(int array[], int const left, int const mid,
-			   int const right)
-	{
-		int const subArrayOne = mid - left + 1;
-		int const subArrayTwo = right - mid;
-
-		auto *leftArray = new int[subArrayOne],
-			 *rightArray = new int[subArrayTwo];
-
-		for (auto i = 0; i < subArrayOne; i++)
-			leftArray[i] = array[left + i];
-		for (auto j = 0; j < subArrayTwo; j++)
-			rightArray[j] = array[mid + 1 + j];
-
-		auto indexOfSubArrayOne = 0, indexOfSubArrayTwo = 0;
-		int indexOfMergedArray = left;
-
-		while (indexOfSubArrayOne < subArrayOne && indexOfSubArrayTwo < subArrayTwo)
-		{
-			if (leftArray[indexOfSubArrayOne] <= rightArray[indexOfSubArrayTwo])
-			{
-				array[indexOfMergedArray] = leftArray[indexOfSubArrayOne];
-				indexOfSubArrayOne++;
-			}
-			else
-			{
-				array[indexOfMergedArray] = rightArray[indexOfSubArrayTwo];
-				indexOfSubArrayTwo++;
-			}
-			indexOfMergedArray++;
-		}
-
-		while (indexOfSubArrayOne < subArrayOne)
-		{
-			array[indexOfMergedArray] = leftArray[indexOfSubArrayOne];
-			indexOfSubArrayOne++;
-			indexOfMergedArray++;
-		}
-
-		while (indexOfSubArrayTwo < subArrayTwo)
-		{
-			array[indexOfMergedArray] = rightArray[indexOfSubArrayTwo];
-			indexOfSubArrayTwo++;
-			indexOfMergedArray++;
-		}
-		delete[] leftArray;
-		delete[] rightArray;
-	}
-
-	void mergeSort(int array[], int const begin, int const end)
-	{
-		if (begin >= end)
-			return;
-
-		int mid = begin + (end - begin) / 2;
-		mergeSort(array, begin, mid);
-		mergeSort(array, mid + 1, end);
-		merge(array, begin, mid, end);
-	}
-
-	void MergeSort(int array[], int size)
-	{
-		mergeSort(array, 0, size-1);
-	}
-
+	mergeSort(array, size-1);
 }
+
+void mergeSort(int arr[], int n)
+{
+int curr_size; 
+int left_start; 
+
+for (curr_size=1; curr_size<=n-1; curr_size = 2*curr_size)
+{
+	for (left_start=0; left_start<n-1; left_start += 2*curr_size)
+	{
+		int mid = min(left_start + curr_size - 1, n-1);
+
+		int right_end = min(left_start + 2*curr_size - 1, n-1);
+
+		merge(arr, left_start, mid, right_end);
+	}
+}
+}
+
+void merge(int arr[], int l, int m, int r)
+{
+	int i, j, k;
+	int n1 = m - l + 1;
+	int n2 = r - m;
+
+	int L[n1], R[n2];
+
+	for (i = 0; i < n1; i++)
+		L[i] = arr[l + i];
+	for (j = 0; j < n2; j++)
+		R[j] = arr[m + 1+ j];
+
+	i = 0;
+	j = 0;
+	k = l;
+	while (i < n1 && j < n2)
+	{
+		if (L[i] <= R[j])
+		{
+			arr[k] = L[i];
+			i++;
+		}
+		else
+		{
+			arr[k] = R[j];
+			j++;
+		}
+		k++;
+	}
+
+	while (i < n1)
+	{
+		arr[k] = L[i];
+		i++;
+		k++;
+	}
+
+	while (j < n2)
+	{
+		arr[k] = R[j];
+		j++;
+		k++;
+	}
+
+	
+}
+
+
+

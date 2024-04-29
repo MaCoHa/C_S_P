@@ -1,64 +1,63 @@
 package mergesort
 
-func merge(array []int, left int, mid int, right int) {
-	subArrayOne := mid - left + 1
-	subArrayTwo := right - mid
+func merge(arr []int, l, m, r int) {
+	n1 := m - l + 1
+	n2 := r - m
 
-	// Create temp arrays
-	leftArray := make([]int, subArrayOne)
-	rightArray := make([]int, subArrayTwo)
+	L := make([]int, n1)
+	R := make([]int, n2)
 
-	// Copy data to temp arrays leftArray[] and rightArray[]
-	for i := 0; i < subArrayOne; i++ {
-		leftArray[i] = array[left+i]
+	for i := 0; i < n1; i++ {
+		L[i] = arr[l+i]
 	}
-	for j := 0; j < subArrayTwo; j++ {
-		rightArray[j] = array[mid+1+j]
+	for j := 0; j < n2; j++ {
+		R[j] = arr[m+1+j]
 	}
 
-	indexOfSubArrayOne := 0
-	indexOfSubArrayTwo := 0
-	indexOfMergedArray := left
-
-	// Merge the temp arrays back into array[left..right]
-	for indexOfSubArrayOne < subArrayOne && indexOfSubArrayTwo < subArrayTwo {
-		if leftArray[indexOfSubArrayOne] <= rightArray[indexOfSubArrayTwo] {
-			array[indexOfMergedArray] = leftArray[indexOfSubArrayOne]
-			indexOfSubArrayOne++
+	i := 0
+	j := 0
+	k := l
+	for i < n1 && j < n2 {
+		if L[i] <= R[j] {
+			arr[k] = L[i]
+			i++
 		} else {
-			array[indexOfMergedArray] = rightArray[indexOfSubArrayTwo]
-			indexOfSubArrayTwo++
+			arr[k] = R[j]
+			j++
 		}
-		indexOfMergedArray++
+		k++
 	}
 
-	// Copy the remaining elements of left[], if there are any
-	for indexOfSubArrayOne < subArrayOne {
-		array[indexOfMergedArray] = leftArray[indexOfSubArrayOne]
-		indexOfSubArrayOne++
-		indexOfMergedArray++
+	for i < n1 {
+		arr[k] = L[i]
+		i++
+		k++
 	}
 
-	// Copy the remaining elements of right[], if there are any
-	for indexOfSubArrayTwo < subArrayTwo {
-		array[indexOfMergedArray] = rightArray[indexOfSubArrayTwo]
-		indexOfSubArrayTwo++
-		indexOfMergedArray++
+	for j < n2 {
+		arr[k] = R[j]
+		j++
+		k++
 	}
 }
 
-// mergeSort is the main function that sorts array[]
-func mergeSort(array []int, begin int, end int) {
-	if begin >= end {
-		return
+func mergeSort(arr []int, n int) {
+	for currSize := 1; currSize <= n-1; currSize = 2 * currSize {
+		for leftStart := 0; leftStart < n-1; leftStart += 2 * currSize {
+			mid := min(leftStart+currSize-1, n-1)
+			rightEnd := min(leftStart+2*currSize-1, n-1)
+			merge(arr, leftStart, mid, rightEnd)
+		}
 	}
+}
 
-	mid := begin + (end-begin)/2
-	mergeSort(array, begin, mid)
-	mergeSort(array, mid+1, end)
-	merge(array, begin, mid, end)
+func min(x, y int) int {
+	if x < y {
+		return x
+	}
+	return y
 }
 
 func MergeSort(array []int) {
-	mergeSort(array, 0, len(array)-1)
+	mergeSort(array, len(array)-1)
 }
