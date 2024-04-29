@@ -23,7 +23,7 @@ time=$(date +"%Y-%m-%d-%H:%M:%S")
 [ ! -d "./data" ] && mkdir ./data
 mkdir data/$time
 
-million_elements=("2" "4" "8" "16" "32" "64")
+million_elements=("2" "4" "8" "16" "32") #Missing 64
 languages=("golang" "c_plus_plus" "python") # Same as folder name
 algorithms=("mergesort" "quicksort") # Same as bash script name excluding "run-" prefix (Ex. run-mergesort.sh = mergesort)
 dataTypes=("1" "2" "3" "4")
@@ -86,10 +86,10 @@ for i in 1 2 3 4 5 6 7 8
 do
     path="data/$time/test-$i"
     mkdir $path
-    counter=1
-    for element_amount in "${million_elements[@]}"
+    for dataType in "${dataTypes[@]}"
     do
-        for dataType in "${dataTypes[@]}"
+        counter=1
+        for element_amount in "${million_elements[@]}"
         do
             for language in "${languages[@]}"
             do
@@ -116,8 +116,8 @@ do
                     grep -A 1 "seconds time elapsed" output.txt | tr -d 'seconds time elapsed' | tr -d '\n' >> $timingsFile
                 done
             done
+            counter=$((counter +1))
         done
-        counter=$((counter +1))
     done
     # Cleanup
     rm -r ./tmp-data
