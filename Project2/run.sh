@@ -71,7 +71,7 @@ do
             perf stat -o output.txt -e cache-misses,dTLB-load-misses bash ./$language/run-$algorithm.sh $element_amount-1.txt 1
             grep -E 'cache-misses' output.txt | sed 's/[^0-9,]//g' | tr -d ',' | tr -d '\n'   >> $cachemissBaseFile
             grep -E 'dTLB-load-misses' output.txt | sed 's/[^0-9,]//g' | tr -d ',' | tr -d '\n' >> $dTLBBaseFile
-            grep -A 1 "seconds time elapsed" output.txt | tr -d 'seconds time elapsed' >> $timingsBaseFile
+            grep -A 1 "seconds time elapsed" output.txt | tr -d 'seconds time elapsed' | tr -d '\n' >> $timingsBaseFile
         done
         echo "" >> $timingsBaseFile
         echo "" >> $cachemissBaseFile
