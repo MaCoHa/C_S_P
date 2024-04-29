@@ -110,8 +110,8 @@ func main() {
 	} else if choice == 3 {
 		numbers = FlippedList(n)
 
-		} else if choice == 4{
-			numbers = SortedList(n)
+	} else if choice == 4 {
+		numbers = SortedList(n)
 
 	} else {
 		numbers = nil

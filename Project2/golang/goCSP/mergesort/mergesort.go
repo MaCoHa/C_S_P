@@ -59,5 +59,5 @@ func min(x, y int) int {
 }
 
 func MergeSort(array []int) {
-	mergeSort(array, len(array)-1)
+	mergeSort(array, len(array))
 }

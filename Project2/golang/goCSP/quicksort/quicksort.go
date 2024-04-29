@@ -70,6 +70,6 @@ func quickSortIterative(arr []int, l int, h int) {
 	}
 }
 
-func QuickSort(array []int, size int) {
-	quickSortIterative(array, 0, size-1)
+func QuickSort(array []int) {
+	quickSortIterative(array, 0, len(array)-1)
 }

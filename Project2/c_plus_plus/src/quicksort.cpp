@@ -38,7 +38,7 @@ namespace QuickSort
 	void quickSortIterative(int arr[], int l, int h)
 	{
 		// Create an auxiliary stack
-		int stack[h - l + 1];
+		vector<int> stack(h - l + 1);
 
 		// initialize top of stack
 		int top = -1;
