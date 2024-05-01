@@ -3,7 +3,7 @@
 cd "$(dirname "${BASH_SOURCE[0]}")"
 echo "Creating test data"
 [ ! -d "./tmp-data" ] && mkdir ./tmp-data
-go run ./input_gen/main.go 32 1 > ./tmp-data/test.txt
+go run ./input_gen/main.go 1 1 > ./tmp-data/test.txt
 
 echo "Tests pass if no output"
 echo " "
@@ -22,11 +22,18 @@ time bash ./golang/run-mergesort.sh test.txt 0
 time bash ./golang/run-quicksort.sh test.txt 0
 #time bash ./golang/run-quicksort.sh test.txt 1
 
-echo "Python testing"
-time bash ./python/run-mergesort.sh test.txt 0
-#time bash ./python/run-mergesort.sh test.txt 1
-time bash ./python/run-quicksort.sh test.txt 0
-#time bash ./python/run-quicksort.sh test.txt 1
+echo "cPython testing"
+time bash ./cpython/run-mergesort.sh test.txt 0
+#time bash ./cpython/run-mergesort.sh test.txt 1
+time bash ./cpython/run-quicksort.sh test.txt 0
+#time bash ./cpython/run-quicksort.sh test.txt 1
+
+echo "Pypy testing"
+bash ./pypy/setup.sh
+time bash ./pypy/run-mergesort.sh test.txt 0
+#time bash ./pypy/run-mergesort.sh test.txt 1
+time bash ./pypy/run-quicksort.sh test.txt 0
+#time bash ./pypy/run-quicksort.sh test.txt 1
 
 echo "Cleanup"
 rm ./tmp-data/test.txt

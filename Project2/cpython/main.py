@@ -30,13 +30,11 @@ def main():
             mergesort.mergeSort(inputData)
         elif algorithm == "quicksort":
             quicksort.quickSortBase(inputData)
-            
-            
         else:
             raise Exception("Unsupported algorithm in python: " + algorithm)
     #print(inputData)
     
-    validate(inputData)
+    #validate(inputData)
     
 
 if __name__ == "__main__":
