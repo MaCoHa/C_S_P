@@ -24,7 +24,7 @@ time=$(date +"%Y-%m-%d-%H:%M:%S")
 mkdir data/$time
 
 million_elements=("2" "4" "8" "16" "32") #Missing 64
-languages=("golang" "c_plus_plus" "python") # Same as folder name
+languages=("python") #python missing for now :) Same as folder name
 algorithms=("mergesort" "quicksort") # Same as bash script name excluding "run-" prefix (Ex. run-mergesort.sh = mergesort)
 dataTypes=("1" "2") # "3" "4"
 SECONDS=0
@@ -36,14 +36,14 @@ do
 done
 
 [ ! -d "./tmp-data" ] && mkdir ./tmp-data
-#for element_amount in "${million_elements[@]}"
-#do
-#    for dataType in "${dataTypes[@]}"
-#    do
-##        echo "Making data $dataType for $element_amount million"
- #       go run ./input_gen/main.go $element_amount $dataType > ./tmp-data/$element_amount-$dataType.txt
-#    done
-#done
+for element_amount in "${million_elements[@]}"
+do
+    for dataType in "${dataTypes[@]}"
+    do
+        echo "Making data $dataType for $element_amount million"
+       go run ./input_gen/main.go $element_amount $dataType > ./tmp-data/$element_amount-$dataType.txt
+    done
+done
 
 path="data/$time/base"
 mkdir $path
@@ -119,10 +119,12 @@ do
             counter=$((counter +1))
         done
     done
-    # Cleanup
-    rm -r ./tmp-data
-    rm output.txt
+#test cleanup
+rm output.txt
 done
+
+# Cleanup
+rm -r ./tmp-data
 
 duration=$SECONDS
 minutes=$((duration / 60))
