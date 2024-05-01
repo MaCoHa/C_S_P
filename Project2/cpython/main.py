@@ -1,7 +1,6 @@
 import sys
 import mergesort
 import quicksort
-sys.setrecursionlimit(10**6)
 
 def validate(arr):
 	sorted = True
@@ -37,7 +36,7 @@ def main():
             raise Exception("Unsupported algorithm in python: " + algorithm)
     #print(inputData)
     
-    #validate(inputData)
+    validate(inputData)
     
 
 if __name__ == "__main__":

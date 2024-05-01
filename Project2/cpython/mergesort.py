@@ -1,5 +1,3 @@
-
-
 def mergeSort(a):
     width = 1
     n = len(a)										 
@@ -38,20 +36,12 @@ def merge(a, l, m, r):
     except IndexError:
         pass
 
-    try:
-        while True:
-            a[k] = L[i] 
-            i += 1
-            k += 1
-    except IndexError:
-        pass
-
-    try:
-        while True:
-            a[k] = R[j] 
-            j += 1
-            k += 1
-    except IndexError:
-        pass
+    for o in range(i, n1):
+        a[k] = L[o] 
+        k += 1
+    for p in range(j, n2):
+        a[k] = R[p] 
+        k += 1
+    
 
 
