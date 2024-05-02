@@ -3,7 +3,7 @@
 cd "$(dirname "${BASH_SOURCE[0]}")"
 echo "Creating test data"
 [ ! -d "./tmp-data" ] && mkdir ./tmp-data
-go run ./input_gen/main.go 1 1 > ./tmp-data/test.txt
+go run ./input_gen/main.go 2 3 > ./tmp-data/test.txt
 
 echo "Tests pass if no output"
 echo " "

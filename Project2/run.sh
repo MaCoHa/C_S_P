@@ -24,9 +24,9 @@ time=$(date +"%Y-%m-%d-%H:%M:%S")
 mkdir data/$time
 
 million_elements=(2 4 8 16 32 64)
-languages=("cpython" "c_plus_plus" "golang" "pypy")
+languages=("c_plus_plus" "golang" "pypy" "cpython")
 algorithms=("mergesort" "quicksort") # Same as bash script name excluding "run-" prefix (Ex. run-mergesort.sh = mergesort)
-dataTypes=("1" "2" "3" "4")
+dataTypes=("1" "2")
 SECONDS=0
 
 # Setup
@@ -80,7 +80,7 @@ do
             echo "" >> $dTLBBaseFile
         done
     done
-    
+
     path="data/$time/test-$i"
     mkdir $path
     for dataType in "${dataTypes[@]}"
@@ -108,7 +108,7 @@ do
                             echo -n "," >> $cachemissFile
                             echo -n "," >> $dTLBFile
                         fi
-                        echo "Running $algorithm with $language and $element_amount million elements for datatype: $datatype"
+                        echo "Running $algorithm with $language and $element_amount million elements for datatype: $dataType"
                         perf stat -o output.txt -e cache-misses,dTLB-load-misses bash ./$language/run-$algorithm.sh $element_amount-$dataType.txt 0
                         grep -E 'cache-misses' output.txt | sed 's/[^0-9,]//g' | tr -d ',' | tr -d '\n'   >> $cachemissFile
                         grep -E 'dTLB-load-misses' output.txt | sed 's/[^0-9,]//g' | tr -d ',' | tr -d '\n' >> $dTLBFile
