@@ -1,0 +1,8 @@
+- Specify the compiler flags
+- Maybe make small tests for iTLB-misses (instructions, cycles)
+- Maybe make small tests for memory usage by monitoring top
+- Base cases maybe
+- Mention recursion vs iterative
+
+
+Is our experiment a "measurement experiment"?
